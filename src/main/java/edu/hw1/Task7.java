@@ -7,7 +7,7 @@ public class Task7 {
     public static int rotateLeft(int number, int shift) {
         int copy = Math.abs(number);
         int sign = number < 0 ? -1 : 1;
-        int len = Integer.toBinaryString(number).length();
+        int len = Integer.toBinaryString(copy).length();
         int bound = (int) Math.pow(2, len - 1);
         for (int i = 0; i < shift; ++i) {
             int digit = copy / bound == 0 ? 0 : 1;
@@ -21,7 +21,7 @@ public class Task7 {
     public static int rotateRight(int number, int shift) {
         int copy = Math.abs(number);
         int sign = number < 0 ? -1 : 1;
-        int len = Integer.toBinaryString(number).length();
+        int len = Integer.toBinaryString(copy).length();
         int bound = (int) Math.pow(2, len - 1);
         for (int i = 0; i < shift; ++i) {
             int digit = copy % 2;
