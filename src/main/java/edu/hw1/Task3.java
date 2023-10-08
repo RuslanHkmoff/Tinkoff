@@ -3,6 +3,7 @@ package edu.hw1;
 public class Task3 {
     private static final int MIN = Integer.MIN_VALUE;
     private static final int MAX = Integer.MAX_VALUE;
+
     private Task3() {
     }
 
@@ -19,16 +20,16 @@ public class Task3 {
 
     private static int getMin(int[] array) {
         int result = MAX;
-        for (int element : array){
-            result  = Math.min(result, element);
+        for (int element : array) {
+            result = Math.min(result, element);
         }
         return result;
     }
 
     private static int getMax(int[] array) {
         int result = MIN;
-        for (int element : array){
-            result  = Math.max(result, element);
+        for (int element : array) {
+            result = Math.max(result, element);
         }
         return result;
     }
