@@ -4,13 +4,16 @@ public class Task8 {
     private static final int LENGTH = 8;
     private static final int[][] SHIFTS = new int[][] {{-1, -2}, {-2, -1}, {1, 2}, {2, 1}};
 
+    private Task8() {
+    }
+
     public static boolean knightBoardCapture(int[][] board) {
-        if (board.length != LENGTH) {
-            throw new IllegalArgumentException();
+        if (board == null || board.length != LENGTH) {
+            throw new IllegalArgumentException("The board must be non null and have ышяу 8x8");
         }
         for (int i = 0; i < LENGTH; ++i) {
-            if (board[i].length != LENGTH) {
-                throw new IllegalArgumentException();
+            if (board[i] == null || board[i].length != LENGTH) {
+                throw new IllegalArgumentException("The board must be non null and have size 8x8");
             }
             for (int j = 0; j < LENGTH; ++j) {
                 if (board[i][j] == 1) {
