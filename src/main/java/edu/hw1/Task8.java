@@ -9,7 +9,7 @@ public class Task8 {
 
     public static boolean knightBoardCapture(int[][] board) {
         if (board == null || board.length != LENGTH) {
-            throw new IllegalArgumentException("The board must be non null and have ышяу 8x8");
+            throw new IllegalArgumentException("The board must be non null and have size 8x8");
         }
         for (int i = 0; i < LENGTH; ++i) {
             if (board[i] == null || board[i].length != LENGTH) {
