@@ -4,7 +4,7 @@ public class Task8 {
     private static final int LENGTH = 8;
     private static final int[][] SHIFTS = new int[][] {{-1, -2}, {-2, -1}, {1, 2}, {2, 1}};
 
-    public boolean knightBoardCapture(int[][] board) {
+    public static boolean knightBoardCapture(int[][] board) {
         if (board.length != LENGTH) {
             throw new IllegalArgumentException();
         }

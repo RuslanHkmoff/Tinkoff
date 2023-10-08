@@ -3,11 +3,10 @@ package edu.hw1;
 public class Task3 {
     private static final int MIN = Integer.MIN_VALUE;
     private static final int MAX = Integer.MAX_VALUE;
-
     private Task3() {
     }
 
-    public boolean isNestable(int[] a1, int[] a2) {
+    public static boolean isNestable(int[] a1, int[] a2) {
         if (a1 == null || a2 == null) {
             throw new IllegalArgumentException("Expected not null value");
         }
@@ -18,18 +17,18 @@ public class Task3 {
         return min1 > min2 && max1 < max2;
     }
 
-    private int getMin(int[] array) {
+    private static int getMin(int[] array) {
         int result = MAX;
-        for (int element : array) {
-            result = Math.min(result, element);
+        for (int element : array){
+            result  = Math.min(result, element);
         }
         return result;
     }
 
-    private int getMax(int[] array) {
+    private static int getMax(int[] array) {
         int result = MIN;
-        for (int element : array) {
-            result = Math.max(result, element);
+        for (int element : array){
+            result  = Math.max(result, element);
         }
         return result;
     }

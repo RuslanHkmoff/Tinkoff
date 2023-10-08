@@ -4,7 +4,7 @@ public class Task7 {
     private Task7() {
     }
 
-    public int rotateLeft(int number, int shift) {
+    public static int rotateLeft(int number, int shift) {
         int copy = Math.abs(number);
         int sign = number < 0 ? -1 : 1;
         int len = Integer.toBinaryString(number).length();
@@ -18,7 +18,7 @@ public class Task7 {
         return copy * sign;
     }
 
-    public int rotateRight(int number, int shift) {
+    public static int rotateRight(int number, int shift) {
         int copy = Math.abs(number);
         int sign = number < 0 ? -1 : 1;
         int len = Integer.toBinaryString(number).length();

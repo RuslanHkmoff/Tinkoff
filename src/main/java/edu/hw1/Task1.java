@@ -7,7 +7,7 @@ public class Task1 {
     private Task1() {
     }
 
-    public int minutesToSeconds(String videoLength) {
+    public static int minutesToSeconds(String videoLength) {
         String[] parsedLength = videoLength.split(":");
         if (parsedLength.length != 2) {
             return INVALID_STRING;
@@ -17,7 +17,7 @@ public class Task1 {
         try {
             minutes = Integer.parseInt(parsedLength[0]);
             seconds = Integer.parseInt(parsedLength[1]);
-            if (seconds < 0 || seconds >= SECONDS_IN_MINUTES) {
+            if (minutes < 0 || seconds < 0 || seconds >= SECONDS_IN_MINUTES) {
                 return INVALID_STRING;
             }
         } catch (NumberFormatException e) {
@@ -25,5 +25,4 @@ public class Task1 {
         }
         return SECONDS_IN_MINUTES * minutes + seconds;
     }
-
 }

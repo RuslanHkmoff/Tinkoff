@@ -13,7 +13,7 @@ public class Task6 {
     private Task6() {
     }
 
-    public int countK(int number) {
+    public static int countK(int number) {
         if (number <= MIN || number >= MAX) {
             throw new IllegalArgumentException("Expected number > 1000, actual: " + number);
         }
@@ -31,7 +31,7 @@ public class Task6 {
         return countK(next);
     }
 
-    private boolean sameDigits(int number) {
+    private static boolean sameDigits(int number) {
         int copy = number;
         int previous = copy % TEN;
         while (copy > 0) {
@@ -43,7 +43,7 @@ public class Task6 {
         return true;
     }
 
-    private int getNext(int number) {
+    private static int getNext(int number) {
         int[] array = new int[LENGTH];
         int copy = number;
         for (int i = LENGTH - 1; i >= 0; i--) {

@@ -6,7 +6,7 @@ public class Task5 {
     private Task5() {
     }
 
-    public boolean isPalindromeDescendant(int number) {
+    public static boolean isPalindromeDescendant(int number) {
         if (number < TEN) {
             return false;
         }
@@ -21,7 +21,7 @@ public class Task5 {
         return isPalindromeDescendant(child);
     }
 
-    private int getChild(String number) {
+    private static int getChild(String number) {
         int child = 0;
         for (int i = 0; i < number.length() - 1; i += 2) {
             int digit1 = Character.getNumericValue(number.charAt(i));
@@ -32,7 +32,7 @@ public class Task5 {
         return child;
     }
 
-    private boolean isPalindrome(String number) {
+    private static boolean isPalindrome(String number) {
         int left = 0;
         int right = number.length() - 1;
         while (left < right) {
