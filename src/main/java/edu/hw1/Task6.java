@@ -15,7 +15,7 @@ public class Task6 {
 
     public static int countK(int number) {
         if (number <= MIN || number >= MAX) {
-            throw new IllegalArgumentException("Expected number > 1000, actual: " + number);
+            throw new IllegalArgumentException("Expected number > 1000 and < 10000, actual: " + number);
         }
         if (sameDigits(number)) {
             throw new IllegalArgumentException("Expected number with different digits, actual: " + number);
