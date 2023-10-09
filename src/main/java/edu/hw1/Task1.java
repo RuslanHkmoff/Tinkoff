@@ -21,7 +21,7 @@ public class Task1 {
             minutes = Integer.parseInt(parsedLength[0]);
             seconds = Integer.parseInt(parsedLength[1]);
             if (minutes < 0 || seconds < 0 || seconds >= SECONDS_IN_MINUTES) {
-                return INVALID_STRING;
+                throw new NumberFormatException();
             }
         } catch (NumberFormatException e) {
             return INVALID_STRING;
