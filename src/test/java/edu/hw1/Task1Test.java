@@ -26,9 +26,10 @@ public class Task1Test {
         String[] tests = new String[] {
             "10:60",
             "-1:00",
-            "2131"
+            "2131",
+            "12:ab",
         };
-        int[] expected = new int[] {-1, -1, -1};
+        int[] expected = new int[] {-1, -1, -1, -1, -1};
         for (int i = 0; i < tests.length; ++i) {
             assertThat(Task1.minutesToSeconds(tests[i])).isEqualTo(expected[i]);
         }

@@ -21,6 +21,7 @@ public class Task8 {
                     for (int[] shift : SHIFTS) {
                         if (i + shift[0] > 0 && i + shift[0] < LENGTH
                             && j + shift[1] > 0 && j + shift[1] < LENGTH
+                            && board[i + shift[0]] != null && board[j + shift[1]] != null
                             && board[i + shift[0]][j + shift[1]] == 1) {
                             return false;
                         }

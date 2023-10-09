@@ -64,11 +64,19 @@ public class Task8Test {
         } catch (IllegalArgumentException e) {
             assertThat(e.getMessage()).isEqualTo(expected);
         }
-        int[][] hasNull = new int[][] {{1, 1, 1}, {0, 0, 1}, null};
+        int[][] hasNull = new int[][] {{0, 0, 0, 1, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0},
+            null,
+            {0, 0, 0, 0, 1, 0, 1, 0},
+            {0, 1, 0, 0, 0, 1, 0, 0},
+            {0, 0, 0, 0, 0, 0, 0, 0},
+            {0, 1, 0, 0, 0, 0, 0, 1},
+            {0, 0, 0, 0, 1, 0, 0, 0}};
         try {
             Task8.knightBoardCapture(hasNull);
             fail("Expected IllegalArgumentException");
-        } catch (IllegalArgumentException e) {
+        } catch (
+            IllegalArgumentException e) {
             assertThat(e.getMessage()).isEqualTo(expected);
         }
     }
