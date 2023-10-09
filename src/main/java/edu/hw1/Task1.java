@@ -8,6 +8,9 @@ public class Task1 {
     }
 
     public static int minutesToSeconds(String videoLength) {
+        if (videoLength == null) {
+            return INVALID_STRING;
+        }
         String[] parsedLength = videoLength.split(":");
         if (parsedLength.length != 2) {
             return INVALID_STRING;
