@@ -3,7 +3,8 @@ package edu.hw1;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class Task8Test {
     @Test
@@ -58,12 +59,12 @@ public class Task8Test {
     void testKnightBoardCaptureInvalidData() {
         int[][] invalidSize = new int[][] {{1, 1, 1}, {0, 0, 1}, {}};
         String expected = "The board must be non null and have size 8x8";
-        try {
-            Task8.knightBoardCapture(invalidSize);
-            fail("Expected IllegalArgumentException");
-        } catch (IllegalArgumentException e) {
-            assertThat(e.getMessage()).isEqualTo(expected);
-        }
+        IllegalArgumentException thrown1 = assertThrows(
+            IllegalArgumentException.class,
+            () -> Task8.knightBoardCapture(invalidSize),
+            "Expected countK to throw IllegalArgumentException, but didn't"
+        );
+        assertTrue(thrown1.getMessage().contains(expected));
         int[][] hasNull = new int[][] {{0, 0, 0, 1, 0, 0, 0, 0},
             {0, 0, 0, 0, 0, 0, 0, 0},
             null,
@@ -72,12 +73,11 @@ public class Task8Test {
             {0, 0, 0, 0, 0, 0, 0, 0},
             {0, 1, 0, 0, 0, 0, 0, 1},
             {0, 0, 0, 0, 1, 0, 0, 0}};
-        try {
-            Task8.knightBoardCapture(hasNull);
-            fail("Expected IllegalArgumentException");
-        } catch (
-            IllegalArgumentException e) {
-            assertThat(e.getMessage()).isEqualTo(expected);
-        }
+        IllegalArgumentException thrown2 = assertThrows(
+            IllegalArgumentException.class,
+            () -> Task8.knightBoardCapture(hasNull),
+            "Expected countK to throw IllegalArgumentException, but didn't"
+        );
+        assertTrue(thrown2.getMessage().contains(expected));
     }
 }

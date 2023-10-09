@@ -3,7 +3,8 @@ package edu.hw1;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class Task6Test {
     @Test
@@ -21,27 +22,27 @@ public class Task6Test {
     void testCountKInvalidData() {
         int moreThanMax = 10000;
         String expected1 = "Expected number > 1000 and < 10000, actual: " + moreThanMax;
-        try {
-            Task6.countK(moreThanMax);
-            fail("Expected IllegalArgumentException");
-        } catch (IllegalArgumentException e) {
-            assertThat(e.getMessage()).isEqualTo(expected1);
-        }
+        IllegalArgumentException thrown1 = assertThrows(
+            IllegalArgumentException.class,
+            () -> Task6.countK(moreThanMax),
+            "Expected countK to throw IllegalArgumentException, but didn't"
+        );
+        assertTrue(thrown1.getMessage().contains(expected1));
         int lessThanMin = 999;
         String expected2 = "Expected number > 1000 and < 10000, actual: " + lessThanMin;
-        try {
-            Task6.countK(lessThanMin);
-            fail("Expected IllegalArgumentException");
-        } catch (IllegalArgumentException e) {
-            assertThat(e.getMessage()).isEqualTo(expected2);
-        }
+        IllegalArgumentException thrown2 = assertThrows(
+            IllegalArgumentException.class,
+            () -> Task6.countK(lessThanMin),
+            "Expected countK to throw IllegalArgumentException, but didn't"
+        );
+        assertTrue(thrown2.getMessage().contains(expected2));
         int sameDigits = 2222;
         String expected3 = "Expected number with different digits, actual: " + sameDigits;
-        try {
-            Task6.countK(sameDigits);
-            fail("Expected IllegalArgumentException");
-        } catch (IllegalArgumentException e) {
-            assertThat(e.getMessage()).isEqualTo(expected3);
-        }
+        IllegalArgumentException thrown3 = assertThrows(
+            IllegalArgumentException.class,
+            () -> Task6.countK(sameDigits),
+            "Expected countK to throw IllegalArgumentException, but didn't"
+        );
+        assertTrue(thrown3.getMessage().contains(expected3));
     }
 }
