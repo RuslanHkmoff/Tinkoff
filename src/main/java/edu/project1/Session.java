@@ -20,7 +20,7 @@ public class Session {
     }
 
     @NotNull public GuessResult guess(String input) {
-        if (input.equals(GIVE_UP)) {
+        if (GIVE_UP.equals(input)) {
             giveUp = true;
             return new GuessResult.Lose("You've given up!");
         }

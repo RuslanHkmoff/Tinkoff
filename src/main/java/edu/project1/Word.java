@@ -14,12 +14,6 @@ public class Word {
         this.hiddenWord = hideWord(word);
     }
 
-    private char[] hideWord(String word) {
-        char[] result = new char[word.length()];
-        Arrays.fill(result, HIDE_SYMBOL);
-        return result;
-    }
-
     public String getHiddenWord() {
         return String.valueOf(hiddenWord);
     }
@@ -45,5 +39,11 @@ public class Word {
     @Override
     public String toString() {
         return word;
+    }
+
+    private char[] hideWord(String word) {
+        char[] result = new char[word.length()];
+        Arrays.fill(result, HIDE_SYMBOL);
+        return result;
     }
 }
