@@ -1,5 +1,9 @@
 package edu.hw2.Task3;
 
+import edu.hw2.Task3.connections.Connection;
+import edu.hw2.Task3.connections.FaultyConnection;
+import edu.hw2.Task3.connections.StableConnection;
+
 public class DefaultConnectionManager implements ConnectionManager {
     private final Double faultyProbability;
 

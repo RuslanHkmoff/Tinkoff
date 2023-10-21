@@ -1,5 +1,7 @@
 package edu.hw2.Task3;
 
+import edu.hw2.Task3.excpetions.ConnectionException;
+
 public class StableConnection implements Connection {
     private boolean connectionOpen = true;
 
