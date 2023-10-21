@@ -1,9 +1,9 @@
 package edu.hw2.Task3Test;
 
-import edu.hw2.Task3.Connection;
-import edu.hw2.Task3.ConnectionManager;
-import edu.hw2.Task3.FaultyConnection;
-import edu.hw2.Task3.FaultyConnectionManager;
+import edu.hw2.Task3.connections.Connection;
+import edu.hw2.Task3.managers.ConnectionManager;
+import edu.hw2.Task3.connections.FaultyConnection;
+import edu.hw2.Task3.managers.FaultyConnectionManager;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

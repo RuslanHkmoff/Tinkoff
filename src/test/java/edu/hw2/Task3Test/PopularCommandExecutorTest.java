@@ -1,34 +1,59 @@
 package edu.hw2.Task3Test;
 
-import edu.hw2.Task3.ConnectionException;
-import edu.hw2.Task3.ConnectionManager;
-import edu.hw2.Task3.DefaultConnectionManager;
 import edu.hw2.Task3.PopularCommandExecutor;
+import edu.hw2.Task3.connections.FaultyConnection;
+import edu.hw2.Task3.connections.Generator;
+import edu.hw2.Task3.connections.StableConnection;
+import edu.hw2.Task3.excpetions.MaxAttemptsExceededException;
+import edu.hw2.Task3.managers.ConnectionManager;
+import edu.hw2.Task3.managers.DefaultConnectionManager;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@ExtendWith(MockitoExtension.class)
 public class PopularCommandExecutorTest {
+    @Mock
+    private ConnectionManager manager;
+
+    @Mock
+    private Generator generator;
+    @Mock
+    private Generator connectionGenerator;
+
+    private PopularCommandExecutor executor;
+
     @Test
-    @DisplayName("Test when stable connection returns")
-    public void test1() {
-        ConnectionManager manager = new DefaultConnectionManager(0.0);
-        PopularCommandExecutor executor = new PopularCommandExecutor(manager, 3);
-        assertDoesNotThrow(executor::updatePackages);
+    @DisplayName("Test, successful execute")
+    void test1() {
+        Mockito.when(generator.generateConnection()).thenReturn(new StableConnection());
+        manager = new DefaultConnectionManager(generator);
+        executor = new PopularCommandExecutor(manager, 3);
+        executor.updatePackages();
     }
 
     @Test
-    @DisplayName("Test when fault connection returns")
-    public void test2() {
-        ConnectionManager manager = new DefaultConnectionManager(1.0);
-        PopularCommandExecutor executor = new PopularCommandExecutor(manager, 3);
-        String expected = "Connection fault";
-        ConnectionException thrown = assertThrows(
-            ConnectionException.class,
-            executor::updatePackages,
-            "Expected connection exception, but didn't"
+    @DisplayName("Test, max attempts exceeded")
+    void test2() {
+        Mockito.doThrow(new RuntimeException("Unknown exception")).when(connectionGenerator).generateException();
+        Mockito.when(generator.generateConnection()).thenReturn(new FaultyConnection(connectionGenerator));
+        manager = new DefaultConnectionManager(generator);
+        executor = new PopularCommandExecutor(manager, 1);
+        String expected = "Unable to execute command, number of attempts exceeded";
+        MaxAttemptsExceededException thrown = assertThrows(
+            MaxAttemptsExceededException.class,
+            () -> executor.updatePackages(),
+            "Expected MaxAttemptsExceededException, but didn't"
         );
-        assertTrue(thrown.getMessage().contains(expected));
+        assertTrue(expected.contains(thrown.getMessage()));
+        assertTrue(thrown.getCause() instanceof RuntimeException);
     }
 }
+
+
 

@@ -1,8 +1,8 @@
 package edu.hw2.Task3Test;
 
-import edu.hw2.Task3.Connection;
-import edu.hw2.Task3.ConnectionException;
-import edu.hw2.Task3.StableConnection;
+import edu.hw2.Task3.connections.Connection;
+import edu.hw2.Task3.excpetions.ConnectionException;
+import edu.hw2.Task3.connections.StableConnection;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
