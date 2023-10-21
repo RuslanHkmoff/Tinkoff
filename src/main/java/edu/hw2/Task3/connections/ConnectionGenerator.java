@@ -6,10 +6,6 @@ public class ConnectionGenerator implements Generator {
     private final double faultyProbability;
     private static final double DEFAULT_PROBABILITY = 0.5;
 
-    public ConnectionGenerator() {
-        this.faultyProbability = DEFAULT_PROBABILITY;
-    }
-
     public ConnectionGenerator(double faultyProbability) {
         this.faultyProbability = faultyProbability;
     }
