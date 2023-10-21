@@ -1,4 +1,4 @@
-package edu.hw2.Task3;
+package edu.hw2.Task3.connections;
 
 import edu.hw2.Task3.excpetions.ConnectionException;
 

@@ -1,5 +1,10 @@
 package edu.hw2.Task3;
 
+import edu.hw2.Task3.connections.Connection;
+import edu.hw2.Task3.excpetions.ConnectionException;
+import edu.hw2.Task3.excpetions.MaxAttemptsExceededException;
+import edu.hw2.Task3.managers.ConnectionManager;
+
 public class PopularCommandExecutor {
     private final ConnectionManager manager;
     private final int maxAttempts;
@@ -22,7 +27,7 @@ public class PopularCommandExecutor {
                 throw e;
             } catch (Exception e) {
                 if (attempt == maxAttempts) {
-                    throw new ConnectionException("Unable to execute command, number of attempts exceeded", e);
+                    throw new MaxAttemptsExceededException("Unable to execute command, number of attempts exceeded", e);
                 }
             }
         }

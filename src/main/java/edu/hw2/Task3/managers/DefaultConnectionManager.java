@@ -1,31 +1,17 @@
-package edu.hw2.Task3;
+package edu.hw2.Task3.managers;
 
 import edu.hw2.Task3.connections.Connection;
-import edu.hw2.Task3.connections.FaultyConnection;
-import edu.hw2.Task3.connections.StableConnection;
+import edu.hw2.Task3.connections.Generator;
 
 public class DefaultConnectionManager implements ConnectionManager {
-    private final Double faultyProbability;
+    private final Generator connectionGenerator;
 
-    public DefaultConnectionManager(Double faultyProbability) {
-        this.faultyProbability = faultyProbability;
-    }
-
-    public DefaultConnectionManager() {
-        this.faultyProbability = null;
+    public DefaultConnectionManager(Generator connectionGenerator) {
+        this.connectionGenerator = connectionGenerator;
     }
 
     @Override
     public Connection getConnection() {
-        if (faultyProbability == null) {
-            if (ConnectionUtils.getProbabilityFault()) {
-                return new FaultyConnection();
-            }
-            return new StableConnection();
-        }
-        if (Math.random() < faultyProbability) {
-            return new FaultyConnection(faultyProbability);
-        }
-        return new StableConnection();
+        return connectionGenerator.generateConnection();
     }
 }

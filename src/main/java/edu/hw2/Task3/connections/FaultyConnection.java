@@ -1,31 +1,26 @@
-package edu.hw2.Task3;
+package edu.hw2.Task3.connections;
 
 import edu.hw2.Task3.excpetions.ConnectionException;
 
 public class FaultyConnection implements Connection {
-    private boolean connectionOpen = true;
-    private Double faultyProbability = null;
+    private boolean connectionClosed = false;
+    private final Generator generator;
 
-    public FaultyConnection(Double faultyProbability) {
-        this.faultyProbability = faultyProbability;
-    }
-
-    public FaultyConnection() {
+    public FaultyConnection(Generator generator) {
+        this.generator = generator;
     }
 
     @Override
     public void execute(String command) {
-        if (!connectionOpen) {
+        if (connectionClosed) {
             throw new ConnectionException("Unable to connect, connection closed");
         }
-        if ((faultyProbability == null && ConnectionUtils.getProbabilityFault())
-            || Math.random() < faultyProbability) {
-            throw new ConnectionException("Connection fault");
-        }
+        generator.generateException();
     }
 
     @Override
     public void close() {
-        connectionOpen = false;
+        connectionClosed = true;
     }
+
 }
