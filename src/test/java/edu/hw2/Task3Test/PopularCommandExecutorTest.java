@@ -18,7 +18,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(MockitoExtension.class)
 public class PopularCommandExecutorTest {
-    @Mock
     private ConnectionManager manager;
 
     @Mock
