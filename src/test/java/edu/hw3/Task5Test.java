@@ -3,8 +3,11 @@ package edu.hw3;
 import edu.hw3.Task5.Person;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
 import static edu.hw3.Task5.ParseContactsUtils.parseContacts;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class Task5Test {
     @Test
@@ -32,5 +35,19 @@ public class Task5Test {
             new Person("Alexander", "")
         };
         assertThat(parseContacts(test, "DESC")).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("Test invalid type")
+    void test3() {
+        String[] test = new String[] {"Paul Erdos", "Leonhard Euler", "Alexander", "Carl Gauss"};
+        String type = "AAA";
+        String expected = "Invalid type of sort, expected ASC or DESC, actual '" + type + "'";
+        IllegalArgumentException thrown = assertThrows(
+            IllegalArgumentException.class,
+            () -> parseContacts(test, type),
+            "Expected IllegalArgumentException, but didn't"
+        );
+        assertTrue(expected.contains(thrown.getMessage()));
     }
 }
