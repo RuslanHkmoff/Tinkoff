@@ -2,20 +2,16 @@ package edu.hw3;
 
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 public class BackwardIterator<T> implements Iterator<T> {
-    private final Object[] collectionArray;
-
-    @Override
-    public void remove() {
-        throw new UnsupportedOperationException();
-    }
-
+    private final List<T> collectionArray;
     private int index;
 
     public BackwardIterator(Collection<T> collection) {
         index = collection.size() - 1;
-        collectionArray = collection.toArray();
+        collectionArray = List.copyOf(collection);
     }
 
     @Override
@@ -25,6 +21,14 @@ public class BackwardIterator<T> implements Iterator<T> {
 
     @Override
     public T next() {
-        return (T) collectionArray[index--];
+        if (!hasNext()) {
+            throw new NoSuchElementException("No such element");
+        }
+        return collectionArray.get(index--);
+    }
+
+    @Override
+    public void remove() {
+        throw new UnsupportedOperationException("Operation is not supported");
     }
 }
