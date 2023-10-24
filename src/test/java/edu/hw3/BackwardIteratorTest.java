@@ -16,9 +16,9 @@ public class BackwardIteratorTest {
         List<String> list = List.of("a", "b", "c");
         BackwardIterator<String> iterator = new BackwardIterator<>(list);
         assertTrue(iterator.hasNext());
-        iterator.next();
-        iterator.next();
-        iterator.next();
+        for (int i = 0; i < 3; i++) {
+            iterator.next();
+        }
         assertFalse(iterator.hasNext());
     }
 
@@ -28,7 +28,7 @@ public class BackwardIteratorTest {
         List<String> list = List.of("a", "b", "c");
         BackwardIterator<String> iterator = new BackwardIterator<>(list);
         assertThat(iterator.next()).isEqualTo("c");
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 2; i++) {
             iterator.next();
         }
         String expected = "No such element";
