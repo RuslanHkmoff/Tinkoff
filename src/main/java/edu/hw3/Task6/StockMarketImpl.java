@@ -7,7 +7,7 @@ public class StockMarketImpl implements StockMarket {
     private final Queue<Stock> priorityQueue;
 
     public StockMarketImpl() {
-        this.priorityQueue = new PriorityQueue<>((a, b) -> Integer.compare(b.getPrice(), a.getPrice()));
+        this.priorityQueue = new PriorityQueue<>((a, b) -> Integer.compare(b.price(), a.price()));
     }
 
     @Override

@@ -11,7 +11,9 @@ public class Task2 {
     }
 
     public static List<String> clusterize(String brackets) {
-        validateSequences(brackets);
+        if (brackets == null) {
+            throw new IllegalArgumentException(EXCEPTION_MESSAGE);
+        }
         int left = 0;
         int balance = 0;
         List<String> result = new ArrayList<>();
@@ -22,28 +24,17 @@ public class Task2 {
             } else {
                 balance--;
             }
+            if (balance < 0) {
+                throw new IllegalArgumentException(EXCEPTION_MESSAGE);
+            }
             if (balance == 0) {
                 result.add(brackets.substring(left, i + 1));
                 left = i + 1;
             }
         }
-        return result;
-    }
-
-    private static void validateSequences(String brackets) {
-        int balance = 0;
-        for (char symbol : brackets.toCharArray()) {
-            if (symbol == OPEN_BRACKET) {
-                balance++;
-            } else {
-                balance--;
-            }
-            if (balance < 0) {
-                throw new IllegalArgumentException(EXCEPTION_MESSAGE);
-            }
-        }
         if (balance != 0) {
             throw new IllegalArgumentException(EXCEPTION_MESSAGE);
         }
+        return result;
     }
 }
