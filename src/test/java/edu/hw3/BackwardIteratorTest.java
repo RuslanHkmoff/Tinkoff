@@ -10,27 +10,36 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BackwardIteratorTest {
+
     @Test
-    @DisplayName("Test hasNext")
-    void tes1() {
+    @DisplayName("Test next")
+    void test1() {
+        List<String> list = List.of("a", "b", "c");
+        String[] expected = new String[] {"c", "b", "a"};
+        BackwardIterator<String> iterator = new BackwardIterator<>(list);
+        for (int i = 0; i < 3; i++) {
+            assertThat(iterator.next()).isEqualTo(expected[i]);
+        }
+    }
+
+    @Test
+    @DisplayName("Test hasNext and next")
+    void test2() {
         List<String> list = List.of("a", "b", "c");
         BackwardIterator<String> iterator = new BackwardIterator<>(list);
+        String[] expected = new String[] {"c", "b", "a"};
         assertTrue(iterator.hasNext());
         for (int i = 0; i < 3; i++) {
-            iterator.next();
+            assertThat(iterator.next()).isEqualTo(expected[i]);
         }
         assertFalse(iterator.hasNext());
     }
 
     @Test
-    @DisplayName("Test next")
-    void test2() {
-        List<String> list = List.of("a", "b", "c");
+    @DisplayName("Test NoSuchElement")
+    void test3() {
+        List<String> list = List.of();
         BackwardIterator<String> iterator = new BackwardIterator<>(list);
-        assertThat(iterator.next()).isEqualTo("c");
-        for (int i = 0; i < 2; i++) {
-            iterator.next();
-        }
         String expected = "No such element";
         NoSuchElementException thrown = assertThrows(
             NoSuchElementException.class,
@@ -42,7 +51,7 @@ public class BackwardIteratorTest {
 
     @Test
     @DisplayName("Test remove")
-    void test3() {
+    void test4() {
         List<String> list = List.of("a", "b", "c");
         BackwardIterator<String> iterator = new BackwardIterator<>(list);
         String expected = "Operation is not supported";
