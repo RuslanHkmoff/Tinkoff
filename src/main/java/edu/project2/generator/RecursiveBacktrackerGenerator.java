@@ -13,8 +13,8 @@ public class RecursiveBacktrackerGenerator implements Generator {
 
     @Override
     public Maze generate(int height, int width) {
-        int newHeight = height+1;
-        int newWidth = width+1;
+        int newHeight = height + 1;
+        int newWidth = width + 1;
         grid = new Cell[newHeight][newWidth];
         fill(grid);
 
@@ -88,7 +88,7 @@ public class RecursiveBacktrackerGenerator implements Generator {
     }
 
     private boolean isValid(int row, int col) {
-        return row >= 0 && row < grid.length - 1
-            && col >= 0 && col < grid[0].length - 1;
+        return row >= 0 && row < grid.length
+            && col >= 0 && col < grid[0].length;
     }
 }
