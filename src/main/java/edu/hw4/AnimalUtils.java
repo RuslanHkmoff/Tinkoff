@@ -1,9 +1,16 @@
 package edu.hw4;
 
-import java.util.*;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class AnimalUtils {
+    private static final int HUNDRED = 100;
+
     private AnimalUtils() {
     }
 
@@ -24,8 +31,8 @@ public class AnimalUtils {
 
     /* Task3 */
     public static Map<Animal.Type, Long> countAllTypes(List<Animal> animals) {
-        return animals.stream().
-            collect(Collectors.groupingBy(Animal::type, Collectors.counting()));
+        return animals.stream()
+                .collect(Collectors.groupingBy(Animal::type, Collectors.counting()));
     }
 
     /* Task4 */
@@ -85,7 +92,7 @@ public class AnimalUtils {
     /* Task11 */
     public static List<Animal> getAnimalsWhoCanBite(List<Animal> animals) {
         return animals.stream()
-            .filter(animal -> animal.height() > 100 && (animal.bites() == null || animal.bites()))
+            .filter(animal -> animal.height() > HUNDRED && (animal.bites() == null || animal.bites()))
             .toList();
     }
 
@@ -158,8 +165,23 @@ public class AnimalUtils {
                         .filter(Objects::nonNull)
                         .collect(Collectors.toSet())
                 )
-            );
+            )
+            .entrySet()
+            .stream()
+            .filter(entry -> !entry.getValue().isEmpty())
+            .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
+
     /* Task20 */
-  //  public static Map<String, String> validateErrorsToString(){}
+    public static Map<String, String> validateErrorsToString(List<Animal> animals) {
+        return validateErrors(animals)
+            .entrySet()
+            .stream()
+            .collect(Collectors.toMap(
+                Map.Entry::getKey,
+                entry -> entry.getValue().stream()
+                    .map(ValidationError::message)
+                    .collect(Collectors.joining("; "))
+            ));
+    }
 }

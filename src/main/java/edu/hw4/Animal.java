@@ -1,7 +1,5 @@
 package edu.hw4;
 
-import java.util.stream.Stream;
-
 public record Animal(
     String name,
     Type type,
@@ -11,6 +9,9 @@ public record Animal(
     int weight,
     Boolean bites
 ) {
+    private static final int CATS_DOGS_PAWS = 4;
+    private static final int SPIDER_PAWS = 8;
+
     enum Type {
         CAT, DOG, BIRD, FISH, SPIDER
     }
@@ -21,10 +22,10 @@ public record Animal(
 
     public int paws() {
         return switch (type) {
-            case CAT, DOG -> 4;
+            case CAT, DOG -> CATS_DOGS_PAWS;
             case BIRD -> 2;
             case FISH -> 0;
-            case SPIDER -> 8;
+            case SPIDER -> SPIDER_PAWS;
         };
     }
 }

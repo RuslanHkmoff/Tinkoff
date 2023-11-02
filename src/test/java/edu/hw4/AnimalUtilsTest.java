@@ -198,20 +198,42 @@ public class AnimalUtilsTest {
     }
 
     @Test
-    @DisplayName("Test getHeaviestFish")
+    @DisplayName("Test validateErrors")
     void test19() {
         List<Animal> animalsWithErrors = List.of(
             new Animal("", Animal.Type.CAT, Animal.Sex.M, 12, 10, 10, true),
-            new Animal("Tom", Animal.Type.CAT, Animal.Sex.M, -1, 10, 10, true),
-            new Animal("Rex", Animal.Type.DOG, Animal.Sex.M, 12, -1, 10, true),
-            new Animal("Alf", Animal.Type.SPIDER, Animal.Sex.M, 12, 10, -1, true),
+            new Animal("Tom", Animal.Type.CAT, Animal.Sex.M, -1, -1, 10, true),
+            new Animal("Rex", Animal.Type.DOG, Animal.Sex.M, 12, -10, 10, true),
+            new Animal("Alf", Animal.Type.SPIDER, Animal.Sex.M, 12, 10, 0, true),
             new Animal("John", Animal.Type.CAT, Animal.Sex.M, 12, 10, 10, true)
         );
-        Map<String, Set<ValidationError>> errors = AnimalUtils.validateErrors(animalsWithErrors);
-        errors.forEach((name, error) -> {
-            System.out.println("-----------------------");
-            System.out.print("name: " + name + "   ");
-            error.forEach(e -> System.out.println(e.getMessage()));
-        });
+        Map<String, Set<ValidationError>> expected = Map.of(
+            "", Set.of(new ValidationError("Name: name is empty")),
+            "Tom", Set.of(
+                new ValidationError("Age: age must be a positive number + actual: '-1'"),
+                new ValidationError("Height: height must be a positive number + actual: '-1'")
+            ),
+            "Rex", Set.of(new ValidationError("Height: height must be a positive number + actual: '-10'")),
+            "Alf", Set.of(new ValidationError("Weight: weight must be a positive number + actual: '0'"))
+
+        );
+        assertThat(AnimalUtils.validateErrors(animalsWithErrors)).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("Test validateErrorsToString")
+    void test20() {
+        List<Animal> animalsWithErrors = List.of(
+            new Animal("", Animal.Type.CAT, Animal.Sex.M, 12, 10, 10, true),
+            new Animal("Tom", Animal.Type.CAT, Animal.Sex.M, -1, -1, 10, true),
+            new Animal("John", Animal.Type.CAT, Animal.Sex.M, 12, 10, 10, true)
+        );
+        Map<String, String> expected = Map.of(
+            "",
+            "Name: name is empty",
+            "Tom",
+            "Height: height must be a positive number + actual: '-1'; Age: age must be a positive number + actual: '-1'"
+        );
+        assertThat(AnimalUtils.validateErrorsToString(animalsWithErrors)).isEqualTo(expected);
     }
 }

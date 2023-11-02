@@ -20,7 +20,7 @@ public class AnimalValidator {
 
     public ValidationError validateName() {
         if (animal.name().isEmpty()) {
-            return new ValidationError("Name: is empty, ");
+            return new ValidationError("Name: name is empty");
         }
         return null;
     }
@@ -28,7 +28,7 @@ public class AnimalValidator {
     public ValidationError validateAge() {
         int age = animal.age();
         if (age <= 0) {
-            return new ValidationError("Age: must be a positive number + actual: '" + age + "', ");
+            return new ValidationError("Age: age must be a positive number + actual: '" + age + "'");
         }
         return null;
     }
@@ -36,7 +36,7 @@ public class AnimalValidator {
     public ValidationError validateHeight() {
         int height = animal.height();
         if (height <= 0) {
-            return new ValidationError("Height: must be a positive number + actual: '" + height + "', ");
+            return new ValidationError("Height: height must be a positive number + actual: '" + height + "'");
         }
         return null;
     }
@@ -44,7 +44,7 @@ public class AnimalValidator {
     public ValidationError validateWeight() {
         int weight = animal.weight();
         if (weight <= 0) {
-            return new ValidationError("Weight: must be a positive number + actual: " + weight + "', ");
+            return new ValidationError("Weight: weight must be a positive number + actual: '" + weight + "'");
         }
         return null;
     }
