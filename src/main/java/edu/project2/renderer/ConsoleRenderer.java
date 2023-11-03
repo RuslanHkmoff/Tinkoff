@@ -3,7 +3,6 @@ package edu.project2.renderer;
 import edu.project2.Cell;
 import edu.project2.Coordinate;
 import edu.project2.Maze;
-
 import java.util.List;
 
 public class ConsoleRenderer implements Renderer {
@@ -33,12 +32,12 @@ public class ConsoleRenderer implements Renderer {
         StringBuilder mazeString = new StringBuilder();
         Cell[][] grid = maze.getGrid();
 
-        for (Cell[] curr : grid){
-            for (Cell cell : curr){
+        for (Cell[] curr : grid) {
+            for (Cell cell : curr) {
                 Coordinate currCoordinate = new Coordinate(cell.row(), cell.col());
-                if (path.contains(currCoordinate)){
+                if (path.contains(currCoordinate)) {
                     mazeString.append(STEP);
-                } else if (cell.type() == Cell.Type.WALL){
+                } else if (cell.type() == Cell.Type.WALL) {
                     mazeString.append(WALL);
                 } else {
                     mazeString.append(PASSAGE);

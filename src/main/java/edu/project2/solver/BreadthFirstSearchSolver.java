@@ -29,9 +29,11 @@ public class BreadthFirstSearchSolver implements Solver {
         queue.offer(start);
         parentMap.put(start, null);
         visited[start.row()][start.col()] = true;
+
         while (!queue.isEmpty()) {
             doStep(end, path);
         }
+
         return path;
     }
 
@@ -49,8 +51,8 @@ public class BreadthFirstSearchSolver implements Solver {
         for (int[] dr : DIRECTIONS) {
             int newRow = curr.row() + dr[0];
             int newCol = curr.col() + dr[1];
-            if (isValid(newRow, newCol) && !visited[newRow][newCol] &&
-                grid[newRow][newCol].type() == Cell.Type.PASSAGE) {
+            if (isValid(newRow, newCol) && !visited[newRow][newCol]
+                && grid[newRow][newCol].type() == Cell.Type.PASSAGE) {
                 queue.offer(new Coordinate(newRow, newCol));
                 visited[newRow][newCol] = true;
                 parentMap.put(new Coordinate(newRow, newCol), curr);
@@ -59,9 +61,10 @@ public class BreadthFirstSearchSolver implements Solver {
     }
 
     private void reconstructPath(Coordinate curr, List<Coordinate> path) {
-        while (curr != null) {
-            path.add(curr);
-            curr = parentMap.get(curr);
+        Coordinate copy = curr;
+        while (copy != null) {
+            path.add(copy);
+            copy = parentMap.get(copy);
         }
         Collections.reverse(path);
     }

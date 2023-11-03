@@ -3,19 +3,27 @@ package edu.project2.generator;
 import edu.project2.Cell;
 import edu.project2.Coordinate;
 import edu.project2.Maze;
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.Arrays;
+import java.util.Deque;
+import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 public class RecursiveBacktrackerGenerator implements Generator {
+    private static final int[][] SHIFTS = new int[][] {
+        {-2, 0},
+        {2, 0},
+        {0, -2},
+        {0, 2}
+    };
     private Cell[][] grid;
     Deque<Coordinate> stack;
     private static final Random RANDOM = new Random();
 
     @Override
     public Maze generate(int height, int width) {
-        int newHeight = height + 1;
-        int newWidth = width + 1;
-        grid = new Cell[newHeight][newWidth];
+        grid = new Cell[height][width];
         fill(grid);
 
         stack = new ArrayDeque<>();
@@ -25,18 +33,18 @@ public class RecursiveBacktrackerGenerator implements Generator {
             doStep();
         }
 
-        return new Maze(newHeight, newWidth, grid);
+        return new Maze(height, width, grid);
     }
 
     private void createStartAndEnd() {
         int startRow = 1;
         int startCol = 1;
         int endRow = grid.length - 1;
-        int endCol = RANDOM.nextInt(grid[0].length - 3) + 1;
+        int endCol = RANDOM.nextInt(grid[0].length - 1);
         stack.push(new Coordinate(startRow, startCol));
         grid[startRow - 1][startCol] = new Cell(0, startCol, Cell.Type.PASSAGE);
         grid[startRow][startCol] = new Cell(startRow, startCol, Cell.Type.PASSAGE);
-        grid[endRow][endCol] = new Cell(0, startCol, Cell.Type.PASSAGE);
+        grid[endRow][endCol] = new Cell(endRow, endCol, Cell.Type.PASSAGE);
 
     }
 
@@ -74,21 +82,15 @@ public class RecursiveBacktrackerGenerator implements Generator {
     private List<Coordinate> getUnvisitedNeighbours(Coordinate curr) {
         int row = curr.row();
         int col = curr.col();
-        int[][] shifts = new int[][] {
-            {-2, 0},
-            {2, 0},
-            {0, -2},
-            {0, 2}
-        };
-        return Arrays.stream(shifts)
+        return Arrays.stream(SHIFTS)
             .map(shift -> new Coordinate(row + shift[0], col + shift[1]))
             .filter(cord -> isValid(cord.row(), cord.col()))
-            .filter(cord -> grid[cord.row()][cord.col()].type() == Cell.Type.WALL)
             .collect(Collectors.toList());
     }
 
     private boolean isValid(int row, int col) {
-        return row >= 0 && row < grid.length
-            && col >= 0 && col < grid[0].length;
+        return row >= 0 && row < grid.length - 1
+            && col >= 0 && col < grid[0].length - 1
+            && grid[row][col].type() == Cell.Type.WALL;
     }
 }
