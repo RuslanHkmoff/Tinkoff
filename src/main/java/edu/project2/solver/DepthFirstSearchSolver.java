@@ -20,12 +20,14 @@ public class DepthFirstSearchSolver implements Solver {
         {0, 1}
     };
 
+    private final MazeUtils mazeUtils;
     private final Set<Coordinate> visited;
     private final Map<Coordinate, Coordinate> prior;
 
     public DepthFirstSearchSolver() {
         visited = new HashSet<>();
         prior = new HashMap<>();
+        mazeUtils = new MazeUtils();
     }
 
     private Cell[][] grid;
@@ -64,7 +66,7 @@ public class DepthFirstSearchSolver implements Solver {
     }
 
     private List<Coordinate> getUnvisitedPassageNeighbours(Coordinate curr, Cell[][] grid) {
-        return MazeUtils.getUnvisitedNeighbours(curr, grid, SHIFTS, Cell.Type.PASSAGE)
+        return mazeUtils.getUnvisitedNeighbours(curr, grid, SHIFTS, Cell.Type.PASSAGE)
             .stream()
             .filter(coordinate -> !visited.contains(coordinate))
             .toList();

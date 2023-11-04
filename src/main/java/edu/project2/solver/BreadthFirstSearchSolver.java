@@ -15,6 +15,7 @@ import java.util.Queue;
 
 public class BreadthFirstSearchSolver implements Solver {
     private static final int[][] DIRECTIONS = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+    private final MazeUtils mazeUtils;
     private final Queue<Coordinate> queue;
     private final Map<Coordinate, Coordinate> parentMap;
     private Cell[][] grid;
@@ -23,6 +24,7 @@ public class BreadthFirstSearchSolver implements Solver {
     public BreadthFirstSearchSolver() {
         queue = new LinkedList<>();
         parentMap = new HashMap<>();
+        mazeUtils = new MazeUtils();
     }
 
     @Override
@@ -54,7 +56,7 @@ public class BreadthFirstSearchSolver implements Solver {
         for (int[] dr : DIRECTIONS) {
             int newRow = curr.row() + dr[0];
             int newCol = curr.col() + dr[1];
-            if (MazeUtils.isValid(newRow, newCol, grid.length, grid[0].length) && !visited[newRow][newCol]
+            if (mazeUtils.isValid(newRow, newCol, grid.length, grid[0].length) && !visited[newRow][newCol]
                 && grid[newRow][newCol].type() == Cell.Type.PASSAGE) {
                 queue.offer(new Coordinate(newRow, newCol));
                 visited[newRow][newCol] = true;
