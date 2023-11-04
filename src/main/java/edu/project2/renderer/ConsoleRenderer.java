@@ -9,6 +9,7 @@ public class ConsoleRenderer implements Renderer {
     private static final String WALL = "▓▓▓";
     private static final String PASSAGE = "   ";
     private static final String STEP = " • ";
+    private static final String LINE_SEPARATOR = System.lineSeparator();
 
     @Override
     public String render(Maze maze) {
@@ -22,7 +23,7 @@ public class ConsoleRenderer implements Renderer {
                     mazeString.append(PASSAGE);
                 }
             }
-            mazeString.append('\n');
+            mazeString.append(LINE_SEPARATOR);
         }
         return mazeString.toString();
     }
@@ -31,7 +32,6 @@ public class ConsoleRenderer implements Renderer {
     public String render(Maze maze, List<Coordinate> path) {
         StringBuilder mazeString = new StringBuilder();
         Cell[][] grid = maze.getGrid();
-
         for (Cell[] curr : grid) {
             for (Cell cell : curr) {
                 Coordinate currCoordinate = new Coordinate(cell.row(), cell.col());
@@ -43,7 +43,7 @@ public class ConsoleRenderer implements Renderer {
                     mazeString.append(PASSAGE);
                 }
             }
-            mazeString.append("\n");
+            mazeString.append(LINE_SEPARATOR);
         }
 
         return mazeString.toString();
