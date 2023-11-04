@@ -33,4 +33,8 @@ public final class Maze {
             throw new IllegalArgumentException("grid must be not null");
         }
     }
+
+    public Cell getCell(int row, int col) {
+        return grid[row][col];
+    }
 }
