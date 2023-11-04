@@ -3,12 +3,10 @@ package edu.project2.generator;
 import edu.project2.Cell;
 import edu.project2.Coordinate;
 import edu.project2.Maze;
+import edu.project2.MazeUtils;
 import java.util.ArrayDeque;
-import java.util.Arrays;
 import java.util.Deque;
 import java.util.List;
-import java.util.Random;
-import java.util.stream.Collectors;
 
 public class RecursiveBacktrackerGenerator implements Generator {
     private static final int[][] SHIFTS = new int[][] {
@@ -17,57 +15,43 @@ public class RecursiveBacktrackerGenerator implements Generator {
         {0, -2},
         {0, 2}
     };
-    private Cell[][] grid;
-    Deque<Coordinate> stack;
-    private static final Random RANDOM = new Random();
+    private Deque<Coordinate> stack;
+    private final MazeUtils mazeUtils;
+
+    public RecursiveBacktrackerGenerator(MazeUtils mazeUtils) {
+        this.mazeUtils = mazeUtils;
+    }
+
+    public RecursiveBacktrackerGenerator() {
+        this.mazeUtils = new MazeUtils();
+    }
 
     @Override
     public Maze generate(int height, int width) {
-        grid = new Cell[height][width];
-        fill(grid);
-
         stack = new ArrayDeque<>();
-        createStartAndEnd();
+        Cell[][] grid = mazeUtils.createGrid(height, width);
+        stack.push(new Coordinate(1, 1));
 
         while (!stack.isEmpty()) {
-            doStep();
+            doStep(grid);
         }
 
         return new Maze(height, width, grid);
     }
 
-    private void createStartAndEnd() {
-        int startRow = 1;
-        int startCol = 1;
-        int endRow = grid.length - 1;
-        int endCol = RANDOM.nextInt(grid[0].length - 1);
-        stack.push(new Coordinate(startRow, startCol));
-        grid[startRow - 1][startCol] = new Cell(0, startCol, Cell.Type.PASSAGE);
-        grid[startRow][startCol] = new Cell(startRow, startCol, Cell.Type.PASSAGE);
-        grid[endRow][endCol] = new Cell(endRow, endCol, Cell.Type.PASSAGE);
-
-    }
-
-    private void fill(Cell[][] grid) {
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[i].length; j++) {
-                grid[i][j] = new Cell(i, j, Cell.Type.WALL);
-            }
-        }
-    }
-
-    private void doStep() {
+    private void doStep(Cell[][] grid) {
         Coordinate curr = stack.peek();
-        List<Coordinate> unvisitedNeighbors = getUnvisitedNeighbours(curr);
+        List<Coordinate> unvisitedNeighbors = getUnvisitedWallNeighbours(curr, grid);
         if (!unvisitedNeighbors.isEmpty()) {
-            removeRandomWall(curr, unvisitedNeighbors);
+            Coordinate nextCell = removeRandomWall(curr, unvisitedNeighbors, grid);
+            stack.push(nextCell);
         } else {
             stack.pop();
         }
     }
 
-    private void removeRandomWall(Coordinate curr, List<Coordinate> unvisitedNeighbors) {
-        int randomIndex = RANDOM.nextInt(unvisitedNeighbors.size());
+    private Coordinate removeRandomWall(Coordinate curr, List<Coordinate> unvisitedNeighbors, Cell[][] grid) {
+        int randomIndex = mazeUtils.getRandomIndex(unvisitedNeighbors.size());
         Coordinate next = unvisitedNeighbors.get(randomIndex);
         int row = next.row();
         int col = next.col();
@@ -76,21 +60,11 @@ public class RecursiveBacktrackerGenerator implements Generator {
         int nextPassageRow = (curr.row() + row) / 2;
         int nextPassageCol = (curr.col() + col) / 2;
         grid[nextPassageRow][nextPassageCol] = new Cell(nextPassageRow, nextPassageCol, Cell.Type.PASSAGE);
-        stack.push(next);
+
+        return next;
     }
 
-    private List<Coordinate> getUnvisitedNeighbours(Coordinate curr) {
-        int row = curr.row();
-        int col = curr.col();
-        return Arrays.stream(SHIFTS)
-            .map(shift -> new Coordinate(row + shift[0], col + shift[1]))
-            .filter(cord -> isValid(cord.row(), cord.col()))
-            .collect(Collectors.toList());
-    }
-
-    private boolean isValid(int row, int col) {
-        return row >= 0 && row < grid.length - 1
-            && col >= 0 && col < grid[0].length - 1
-            && grid[row][col].type() == Cell.Type.WALL;
+    private List<Coordinate> getUnvisitedWallNeighbours(Coordinate curr, Cell[][] grid) {
+        return mazeUtils.getUnvisitedNeighbours(curr, grid, SHIFTS, Cell.Type.WALL);
     }
 }
