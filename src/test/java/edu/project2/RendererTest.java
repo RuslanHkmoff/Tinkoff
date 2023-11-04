@@ -4,10 +4,10 @@ import edu.project2.renderer.ConsoleRenderer;
 import edu.project2.renderer.Renderer;
 import edu.project2.solver.BreadthFirstSearchSolver;
 import edu.project2.solver.Solver;
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class RendererTest {
@@ -20,7 +20,7 @@ public class RendererTest {
         int height = 5;
         int width = 5;
         Cell[][] grid = new Cell[][] {
-            {new Cell(0, 0, Cell.Type.WALL), new Cell(0, 1, Cell.Type.PASSAGE), new Cell(0, 2, Cell.Type.WALL),
+            {new Cell(0, 0, Cell.Type.WALL), new Cell(0, 1, Cell.Type.WALL), new Cell(0, 2, Cell.Type.WALL),
                 new Cell(0, 3, Cell.Type.WALL), new Cell(0, 4, Cell.Type.WALL)},
             {new Cell(1, 0, Cell.Type.WALL), new Cell(1, 1, Cell.Type.PASSAGE), new Cell(1, 2, Cell.Type.WALL),
                 new Cell(1, 3, Cell.Type.PASSAGE), new Cell(1, 4, Cell.Type.WALL)},
@@ -28,7 +28,7 @@ public class RendererTest {
                 new Cell(2, 3, Cell.Type.PASSAGE), new Cell(2, 4, Cell.Type.WALL)},
             {new Cell(3, 0, Cell.Type.WALL), new Cell(3, 1, Cell.Type.PASSAGE), new Cell(3, 2, Cell.Type.PASSAGE),
                 new Cell(3, 3, Cell.Type.PASSAGE), new Cell(3, 4, Cell.Type.WALL)},
-            {new Cell(4, 0, Cell.Type.WALL), new Cell(4, 1, Cell.Type.WALL), new Cell(4, 2, Cell.Type.PASSAGE),
+            {new Cell(4, 0, Cell.Type.WALL), new Cell(4, 1, Cell.Type.WALL), new Cell(4, 2, Cell.Type.WALL),
                 new Cell(4, 3, Cell.Type.WALL), new Cell(4, 4, Cell.Type.WALL)}
         };
         maze = new Maze(height, width, grid);
@@ -38,44 +38,29 @@ public class RendererTest {
     @Test
     @DisplayName("Test render maze")
     void test1() {
-        String expected = "▓▓▓   ▓▓▓▓▓▓▓▓▓\n" +
-            "▓▓▓   ▓▓▓   ▓▓▓\n" +
-            "▓▓▓   ▓▓▓   ▓▓▓\n" +
-            "▓▓▓         ▓▓▓\n" +
-            "▓▓▓▓▓▓   ▓▓▓▓▓▓\n";
+        String expected = """
+            ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+            ▓▓▓   ▓▓▓   ▓▓▓
+            ▓▓▓   ▓▓▓   ▓▓▓
+            ▓▓▓         ▓▓▓
+            ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+            """.replace("\n", System.lineSeparator());
+
         assertThat(renderer.render(maze)).isEqualTo(expected);
     }
 
     @Test
     @DisplayName("Test render maze with path")
     void test2() {
-        String expected = "▓▓▓ • ▓▓▓▓▓▓▓▓▓\n" +
-            "▓▓▓ • ▓▓▓   ▓▓▓\n" +
-            "▓▓▓ • ▓▓▓   ▓▓▓\n" +
-            "▓▓▓ •  •    ▓▓▓\n" +
-            "▓▓▓▓▓▓ • ▓▓▓▓▓▓\n";
+        String expected = """
+            ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+            ▓▓▓ • ▓▓▓   ▓▓▓
+            ▓▓▓ • ▓▓▓   ▓▓▓
+            ▓▓▓ •  •  • ▓▓▓
+            ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+            """.replace("\n", System.lineSeparator());
         Solver solver = new BreadthFirstSearchSolver();
-        List<Coordinate> path = solver.solve(maze, new Coordinate(0, 1), new Coordinate(4, 2));
+        List<Coordinate> path = solver.solve(maze, new Coordinate(1, 1), new Coordinate(3, 3));
         assertThat(renderer.render(maze, path)).isEqualTo(expected);
     }
 }
-
-/*
-Cell[row=0, col=0, type=WALL] Cell[row=0, col=1, type=PASSAGE] Cell[row=0, col=2, type=WALL] Cell[row=0, col=3, type=WALL] Cell[row=0, col=4, type=WALL]
-Cell[row=1, col=0, type=WALL] Cell[row=1, col=1, type=PASSAGE] Cell[row=1, col=2, type=WALL] Cell[row=1, col=3, type=PASSAGE] Cell[row=1, col=4, type=WALL]
-Cell[row=2, col=0, type=WALL] Cell[row=2, col=1, type=PASSAGE] Cell[row=2, col=2, type=WALL] Cell[row=2, col=3, type=PASSAGE] Cell[row=2, col=4, type=WALL]
-Cell[row=3, col=0, type=WALL] Cell[row=3, col=1, type=PASSAGE] Cell[row=3, col=2, type=PASSAGE] Cell[row=3, col=3, type=PASSAGE] Cell[row=3, col=4, type=WALL]
-Cell[row=4, col=0, type=WALL] Cell[row=4, col=1, type=WALL] Cell[row=4, col=2, type=PASSAGE] Cell[row=4, col=3, type=WALL] Cell[row=4, col=4, type=WALL]
-▓▓▓   ▓▓▓▓▓▓▓▓▓
-▓▓▓   ▓▓▓   ▓▓▓
-▓▓▓   ▓▓▓   ▓▓▓
-▓▓▓         ▓▓▓
-▓▓▓▓▓▓   ▓▓▓▓▓▓
-
-[Coordinate[row=0, col=1], Coordinate[row=1, col=1], Coordinate[row=2, col=1], Coordinate[row=3, col=1], Coordinate[row=3, col=2], Coordinate[row=4, col=2]]
-▓▓▓ • ▓▓▓▓▓▓▓▓▓
-▓▓▓ • ▓▓▓   ▓▓▓
-▓▓▓ • ▓▓▓   ▓▓▓
-▓▓▓ •  •    ▓▓▓
-▓▓▓▓▓▓ • ▓▓▓▓▓▓
- */
