@@ -3,6 +3,7 @@ package edu.project2.solver;
 import edu.project2.Cell;
 import edu.project2.Coordinate;
 import edu.project2.Maze;
+import edu.project2.MazeUtils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -13,45 +14,47 @@ import java.util.Objects;
 import java.util.Queue;
 
 public class BreadthFirstSearchSolver implements Solver {
+    private static final int[][] DIRECTIONS = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+    private final Queue<Coordinate> queue;
+    private final Map<Coordinate, Coordinate> parentMap;
     private Cell[][] grid;
     private boolean[][] visited;
-    private Queue<Coordinate> queue;
-    private Map<Coordinate, Coordinate> parentMap;
-    private static final int[][] DIRECTIONS = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+
+    public BreadthFirstSearchSolver() {
+        queue = new LinkedList<>();
+        parentMap = new HashMap<>();
+    }
 
     @Override
     public List<Coordinate> solve(Maze maze, Coordinate start, Coordinate end) {
         grid = maze.getGrid();
         visited = new boolean[grid.length][grid[0].length];
-        List<Coordinate> path = new ArrayList<>();
-        queue = new LinkedList<>();
-        parentMap = new HashMap<>();
         queue.offer(start);
         parentMap.put(start, null);
         visited[start.row()][start.col()] = true;
+        Coordinate curr = start;
 
         while (!queue.isEmpty()) {
-            doStep(end, path);
+            curr = doStep();
+            if (curr.equals(end)) {
+                break;
+            }
         }
 
-        return path;
+        return reconstructPath(curr, end);
     }
 
-    private void doStep(Coordinate end, List<Coordinate> path) {
+    private Coordinate doStep() {
         Coordinate curr = queue.poll();
-        Objects.requireNonNull(curr);
-        if (curr.equals(end)) {
-            reconstructPath(curr, path);
-            return;
-        }
         checkNeighbours(curr);
+        return curr;
     }
 
     private void checkNeighbours(Coordinate curr) {
         for (int[] dr : DIRECTIONS) {
             int newRow = curr.row() + dr[0];
             int newCol = curr.col() + dr[1];
-            if (isValid(newRow, newCol) && !visited[newRow][newCol]
+            if (MazeUtils.isValid(newRow, newCol, grid.length, grid[0].length) && !visited[newRow][newCol]
                 && grid[newRow][newCol].type() == Cell.Type.PASSAGE) {
                 queue.offer(new Coordinate(newRow, newCol));
                 visited[newRow][newCol] = true;
@@ -60,18 +63,18 @@ public class BreadthFirstSearchSolver implements Solver {
         }
     }
 
-    private void reconstructPath(Coordinate curr, List<Coordinate> path) {
+    private List<Coordinate> reconstructPath(Coordinate curr, Coordinate end) {
+        if (!Objects.equals(curr, end)) {
+            return new ArrayList<>();
+        }
+        List<Coordinate> reconstructedPath = new ArrayList<>();
         Coordinate copy = curr;
         while (copy != null) {
-            path.add(copy);
+            reconstructedPath.add(copy);
             copy = parentMap.get(copy);
         }
-        Collections.reverse(path);
-    }
-
-    private boolean isValid(int row, int col) {
-        return row >= 0 && row < grid.length
-            && col >= 0 && col < grid[0].length;
+        Collections.reverse(reconstructedPath);
+        return reconstructedPath;
     }
 }
 
