@@ -12,16 +12,6 @@ public final class Maze {
         this.grid = grid;
     }
 
-    private void validateArguments(int height, int width, Cell[][] grid) {
-        if (height < 0) {
-            throw new IllegalArgumentException("height must be a positive number, actual '" + height + "'");
-        } else if (width < 0) {
-            throw new IllegalArgumentException("width must be a positive number, actual '" + width + "'");
-        } else if (grid == null) {
-            throw new IllegalArgumentException("grid must be not null");
-        }
-    }
-
     public int getHeight() {
         return height;
     }
@@ -32,5 +22,15 @@ public final class Maze {
 
     public Cell[][] getGrid() {
         return grid;
+    }
+
+    private void validateArguments(int height, int width, Cell[][] grid) {
+        if (height < 0) {
+            throw new IllegalArgumentException("height must be a positive number, actual '" + height + "'");
+        } else if (width < 0) {
+            throw new IllegalArgumentException("width must be a positive number, actual '" + width + "'");
+        } else if (grid == null) {
+            throw new IllegalArgumentException("grid must be not null");
+        }
     }
 }
