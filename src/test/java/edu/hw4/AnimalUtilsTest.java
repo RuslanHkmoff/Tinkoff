@@ -8,8 +8,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AnimalUtilsTest {
     private List<Animal> animals;
@@ -201,14 +200,12 @@ public class AnimalUtilsTest {
     @DisplayName("Test validateErrors")
     void test19() {
         List<Animal> animalsWithErrors = List.of(
-            new Animal("", Animal.Type.CAT, Animal.Sex.M, 12, 10, 10, true),
             new Animal("Tom", Animal.Type.CAT, Animal.Sex.M, -1, -1, 10, true),
             new Animal("Rex", Animal.Type.DOG, Animal.Sex.M, 12, -10, 10, true),
             new Animal("Alf", Animal.Type.SPIDER, Animal.Sex.M, 12, 10, 0, true),
             new Animal("John", Animal.Type.CAT, Animal.Sex.M, 12, 10, 10, true)
         );
         Map<String, Set<ValidationError>> expected = Map.of(
-            "", Set.of(new ValidationError("Name: name is empty")),
             "Tom", Set.of(
                 new ValidationError("Age: age must be a positive number + actual: '-1'"),
                 new ValidationError("Height: height must be a positive number + actual: '-1'")
@@ -224,16 +221,37 @@ public class AnimalUtilsTest {
     @DisplayName("Test validateErrorsToString")
     void test20() {
         List<Animal> animalsWithErrors = List.of(
-            new Animal("", Animal.Type.CAT, Animal.Sex.M, 12, 10, 10, true),
             new Animal("Tom", Animal.Type.CAT, Animal.Sex.M, -1, -1, 10, true),
             new Animal("John", Animal.Type.CAT, Animal.Sex.M, 12, 10, 10, true)
         );
         Map<String, String> expected = Map.of(
-            "",
-            "Name: name is empty",
             "Tom",
             "Height: height must be a positive number + actual: '-1'; Age: age must be a positive number + actual: '-1'"
         );
         assertThat(AnimalUtils.validateErrorsToString(animalsWithErrors)).isEqualTo(expected);
+    }
+
+    @Test
+    @DisplayName("Test invalid name")
+    void test21() {
+        List<Animal> animalWithEmptyName = List.of(
+            new Animal("", Animal.Type.CAT, Animal.Sex.M, -1, -1, 10, true));
+        IllegalArgumentException thrown1 = assertThrows(
+            IllegalArgumentException.class,
+            () -> AnimalUtils.validateErrors(animalWithEmptyName),
+            "Expected IllegalArgumentException, bit didn't"
+        );
+        String expected1 = "Name: name is empty";
+        assertTrue(expected1.contains(thrown1.getMessage()));
+
+        List<Animal> animalWithNullName = List.of(
+            new Animal(null, Animal.Type.CAT, Animal.Sex.M, -1, -1, 10, true));
+        IllegalArgumentException thrown2 = assertThrows(
+            IllegalArgumentException.class,
+            () -> AnimalUtils.validateErrors(animalWithNullName),
+            "Expected IllegalArgumentException, bit didn't"
+        );
+        String expected2 = "Name: name is null";
+        assertTrue(expected2.contains(thrown2.getMessage()));
     }
 }

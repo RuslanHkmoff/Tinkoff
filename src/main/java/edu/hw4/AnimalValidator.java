@@ -19,8 +19,11 @@ public class AnimalValidator {
     }
 
     public ValidationError validateName() {
+        if (animal.name() == null) {
+            throw new IllegalArgumentException("Name: name is null");
+        }
         if (animal.name().isEmpty()) {
-            return new ValidationError("Name: name is empty");
+            throw new IllegalArgumentException("Name: name is empty");
         }
         return null;
     }
