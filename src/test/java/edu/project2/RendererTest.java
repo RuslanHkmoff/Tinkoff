@@ -4,10 +4,10 @@ import edu.project2.renderer.ConsoleRenderer;
 import edu.project2.renderer.Renderer;
 import edu.project2.solver.BreadthFirstSearchSolver;
 import edu.project2.solver.Solver;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class RendererTest {

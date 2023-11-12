@@ -2,12 +2,10 @@ package edu.project2;
 
 import edu.project2.solver.BreadthFirstSearchSolver;
 import edu.project2.solver.Solver;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class SolverTest {

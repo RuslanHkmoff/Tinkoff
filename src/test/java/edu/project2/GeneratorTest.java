@@ -2,13 +2,10 @@ package edu.project2;
 
 import edu.project2.generator.Generator;
 import edu.project2.generator.RecursiveBacktrackerGenerator;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
-
 import java.util.Arrays;
 import java.util.List;
-
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class GeneratorTest {
