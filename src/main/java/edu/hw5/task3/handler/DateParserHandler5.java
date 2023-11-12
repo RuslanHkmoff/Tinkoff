@@ -26,12 +26,5 @@ public class DateParserHandler5 implements DateParserHandler {
             case "yesterday" -> Optional.of(LocalDate.now().minusDays(1));
             default -> throw new Exception();
         };
-//        if ("tomorrow".equals(date)) {
-//            return Optional.of(LocalDate.now().plusDays(1));
-//
-//        } else if ("yesterday".equals(date)) {
-//            return Optional.of(LocalDate.now().minusDays(1));
-//        }
-//        throw new Exception();
     }
 }
