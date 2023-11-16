@@ -8,14 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import static edu.hw6.task3.FilterUtils.READABLE;
+import static edu.hw6.task3.FilterUtils.REGULAR_FILE;
 import static edu.hw6.task3.FilterUtils.globMatches;
 import static edu.hw6.task3.FilterUtils.largerThan;
 import static edu.hw6.task3.FilterUtils.magicNumber;
-import static edu.hw6.task3.FilterUtils.READABLE;
 import static edu.hw6.task3.FilterUtils.regexContains;
-import static edu.hw6.task3.FilterUtils.REGULAR_FILE;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class FilterUtilsTest {
     @Test
@@ -29,8 +28,8 @@ public class FilterUtilsTest {
         String dir = "src/main/resources/task3";
         ArrayList<String> got = new ArrayList<>();
         List<String> expected = List.of(
-            "src\\main\\resources\\task3\\test_1.png",
-            "src\\main\\resources\\task3\\test_2.png"
+            "src/main/resources/task3/test_1.png",
+            "src/main/resources/task3/test_2.png"
         );
         try (DirectoryStream<Path> entries = Files.newDirectoryStream(Path.of(dir), filter)) {
             entries.forEach(entry -> got.add(entry.toString()));

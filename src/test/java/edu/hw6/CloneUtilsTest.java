@@ -43,7 +43,7 @@ public class CloneUtilsTest {
             () -> CloneUtils.cloneFile(file.toPath()),
             "Expected IllegalArgumentException, but didn't"
         );
-        String expected = "path doesn't exists 'src\\main\\resources\\task2\\testtt.txt'";
+        String expected = "path doesn't exists 'src/main/resources/task2/testtt.txt'";
         assertTrue(expected.contains(thrown.getMessage()));
 
     }

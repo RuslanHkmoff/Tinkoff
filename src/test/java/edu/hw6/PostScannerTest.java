@@ -38,15 +38,16 @@ public class PostScannerTest {
     @DisplayName("test getLog")
     void test2() {
         String expected = """
-            TCP       53    DNS
-            UDP       53    DNS
-            TCP       135   EPMAP
-            UDP       135   EPMAP
-            TCP       137   Служба имен NetBIOS
-            UDP       137   Служба имен NetBIOS
-            TCP       139   Служба сеансов NetBIOS
-            UDP       139   Служба сеансов NetBIOS
-                        """.replace("\n", System.lineSeparator());
+        Протокол  Порт  Сервис
+        TCP       53    DNS
+        UDP       53    DNS
+        TCP       135   EPMAP
+        UDP       135   EPMAP
+        TCP       137   Служба имен NetBIOS
+        UDP       137   Служба имен NetBIOS
+        TCP       139   Служба сеансов NetBIOS
+        UDP       139   Служба сеансов NetBIOS
+        """.replace("\n", System.lineSeparator());
         assertThat(scanner.getLog()).isEqualTo(expected);
     }
 }
