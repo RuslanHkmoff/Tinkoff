@@ -28,11 +28,11 @@ public class Task3Test {
             Optional.of(LocalDate.of(2020, 12, 2)),
             Optional.of(LocalDate.of(1976, 1, 3)),
             Optional.of(LocalDate.of(2020, 1, 3)),
-            Optional.of(LocalDate.of(2023, 11, 13)),
-            Optional.of(LocalDate.of(2023, 11, 12)),
-            Optional.of(LocalDate.of(2023, 11, 11)),
-            Optional.of(LocalDate.of(2023, 11, 11)),
-            Optional.of(LocalDate.of(2023, 11, 5)),
+            Optional.of(LocalDate.now().plusDays(1)),
+            Optional.of(LocalDate.now()),
+            Optional.of(LocalDate.now().minusDays(1)),
+            Optional.of(LocalDate.now().minusDays(1)),
+            Optional.of(LocalDate.now().minusDays(7)),
             Optional.empty()
         };
         for (int i = 0; i < tests.length; i++) {
