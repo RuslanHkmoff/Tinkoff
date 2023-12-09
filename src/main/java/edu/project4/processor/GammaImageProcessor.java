@@ -1,4 +1,4 @@
-package edu.project4.image;
+package edu.project4.processor;
 
 import edu.project4.model.FractalImage;
 import edu.project4.model.Pixel;
@@ -9,7 +9,7 @@ public class GammaImageProcessor implements ImageProcessor {
     private static final double GAMMA = 0.4;
 
     @Override
-    public FractalImage process(FractalImage image) {
+    public void process(FractalImage image) {
         double max = calculateMax(image);
 
         int width = image.getWidth();
@@ -28,7 +28,6 @@ public class GammaImageProcessor implements ImageProcessor {
         }
 
         image.setData(data);
-        return new FractalImage(data, width, height);
     }
 
     private double calculateMax(FractalImage image) {

@@ -1,9 +1,9 @@
-package edu.project4.image;
+package edu.project4.processor;
 
 import edu.project4.model.FractalImage;
 
 @FunctionalInterface
 public
 interface ImageProcessor {
-    FractalImage process(FractalImage image);
+    void process(FractalImage image);
 }
