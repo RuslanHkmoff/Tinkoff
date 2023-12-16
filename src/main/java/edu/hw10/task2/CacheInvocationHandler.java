@@ -48,7 +48,7 @@ public class CacheInvocationHandler implements InvocationHandler {
             }
         } catch (NoSuchMethodException e) {
             throw new IllegalArgumentException(
-                "Возвращаемый тип должен поддерживать статический метод valueOf(String)"
+                "The return value must have the valueOf method"
             );
         }
         return need;
