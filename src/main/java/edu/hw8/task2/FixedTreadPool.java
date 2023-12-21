@@ -45,7 +45,10 @@ public class FixedTreadPool implements ThreadPool {
     }
 
     @Override
-    public void close() {
+    public void close() throws InterruptedException {
         Arrays.stream(threads).forEach(Thread::interrupt);
+        for (Thread thread : threads) {
+            thread.join();
+        }
     }
 }
