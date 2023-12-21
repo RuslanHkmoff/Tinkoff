@@ -6,12 +6,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
-import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class ClientHandler implements Runnable {
     private final Socket client;
-    private static final Map<String, String> RESPONSES = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<String, String> RESPONSES = new ConcurrentHashMap<>();
 
     static {
         RESPONSES.put("личности", "Не переходи на личности там, где их нет");
